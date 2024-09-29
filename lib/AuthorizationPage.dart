@@ -15,19 +15,18 @@ class AuthorizationPage extends StatefulWidget {
 class AuthorizationPageState extends State<AuthorizationPage> {
 
   MySharedPreferences mySharedPreferences = new MySharedPreferences();
-
-  String? cachedData = null;
-
   @override
   void initState(){
 
-    mySharedPreferences.getDataIfNotExpired().then((value) => cachedData = value);
+    mySharedPreferences.getDataIfNotExpired().then((cachedData){
+      print('Cached data: ' + cachedData.toString());
 
-    if (cachedData != null) {
-      Future(() {
-        Navigator.of(context).pushNamed('/lk');
-      });
-    }
+      if (cachedData != null) {
+        Future(() {
+          Navigator.of(context).pushNamed('/lk');
+        });
+      }
+    });
 
     super.initState();
   }

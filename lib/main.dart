@@ -1,3 +1,4 @@
+import 'package:admission_flutter/AdminUserPage.dart';
 import 'package:admission_flutter/AuthorizationPage.dart';
 import 'package:admission_flutter/HomePage.dart';
 import 'package:admission_flutter/LoginPage.dart';
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
         '/lk': (context) => LK(),
-/*         '/adminLK': (context) => UserInfoMapPage(),
-        '/directions': (context) => DirectionsPage(),
+        '/adminLK': (context) => AdminLK(),
+/*         '/directions': (context) => DirectionsPage(),
         'direction/:id' (context) => SingleDirectionPage() */
       },
     );

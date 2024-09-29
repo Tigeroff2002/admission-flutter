@@ -4,6 +4,7 @@ import 'package:admission_flutter/AuthorizationPage.dart';
 import 'package:admission_flutter/GlobalEndpoints.dart';
 import 'package:admission_flutter/models/requests/UserLKModelRequest.dart';
 import 'package:admission_flutter/models/requests/UserLogoutModelRequest.dart';
+import 'package:admission_flutter/models/responses/AdminCheckResponse.dart';
 import 'package:admission_flutter/models/responses/ResponseWithToken.dart';
 import 'package:admission_flutter/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class LK extends StatefulWidget {
 }
 
 class LKState extends State<LK> {
+
   String name = '';
   List<dynamic> directionsLinks = [];
   String profilePictureUrl = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg";
@@ -37,7 +39,12 @@ class LKState extends State<LK> {
         Future(() {
           Navigator.of(context).pushNamed('/');
         });
-      }      
+      }  
+      else{
+        var json = jsonDecode(value.toString());
+        var cacheContent = AdminCheckResponse.fromJson(json);
+        isAdmin = cacheContent.is_admin;     
+      }    
     });
 
     getUserData();
@@ -47,7 +54,7 @@ class LKState extends State<LK> {
     mySharedPreferences.getDataIfNotExpired().then((cachedData) async {
       
     var json = jsonDecode(cachedData.toString());
-    var cacheContent = ResponseWithToken.fromJson(json);
+    var cacheContent = AdminCheckResponse.fromJson(json);
 
     var abiturient_id = cacheContent.abiturient_id;
     var token = cacheContent.token;
@@ -70,11 +77,9 @@ class LKState extends State<LK> {
           setState(() {
             name = "${content['first_name']} ${content['second_name']}";
             directionsLinks = content['directions_links'] ?? [];
-            isAdmin = data['is_admin'] ?? false;
           });
         } else {
           print("Error fetching user data:");
-          //Navigator.pushReplacementNamed(context, '/');
         }
       }
     } catch (error) {
@@ -147,22 +152,25 @@ class LKState extends State<LK> {
     }});
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(isAdmin ? 'Панель администратора' : 'Личный кабинет пользователя'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Text('Выйти'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(isAdmin ? 'Панель администратора' : 'Личный кабинет пользователя'),
+      centerTitle: true,
+      leading: IconButton(
+        icon: Text('Выйти', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
-      body: Padding(
+    ),
+    body: Center( // Add Center widget here
+      child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, // Center vertically
+          crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
           children: [
             CircleAvatar(
               radius: 50,
@@ -184,9 +192,10 @@ class LKState extends State<LK> {
                         },
                         child: Text('Перейти на страницу админа'),
                       ),
+                      SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: toggleDirectionForm,
-                        child: Text(showDirectionForm ? 'Скрыть форму' : 'Добавить новое нправление'),
+                        child: Text(showDirectionForm ? 'Скрыть форму' : 'Добавить новое направление'),
                       ),
                       if (showDirectionForm)
                         Column(
@@ -194,11 +203,11 @@ class LKState extends State<LK> {
                             if (formError.isNotEmpty)
                               Text(formError, style: TextStyle(color: Colors.red)),
                             TextFormField(
-                              decoration: InputDecoration(labelText: 'Название нправления'),
+                              decoration: InputDecoration(labelText: 'Название направление'),
                               onChanged: (value) => directionName = value,
                             ),
                             TextFormField(
-                              decoration: InputDecoration(labelText: 'Кол0во бюджетных мест'),
+                              decoration: InputDecoration(labelText: 'Кол-во бюджетных мест'),
                               keyboardType: TextInputType.number,
                               onChanged: (value) => budgetPlaces = value,
                             ),
@@ -207,6 +216,7 @@ class LKState extends State<LK> {
                               keyboardType: TextInputType.number,
                               onChanged: (value) => minBall = value,
                             ),
+                            SizedBox(height: 15.0),
                             ElevatedButton(
                               onPressed: handleSubmitDirection,
                               child: Text('Отправить'),
@@ -234,8 +244,9 @@ class LKState extends State<LK> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
     Future<void> logout(BuildContext context) async {
       mySharedPreferences.getDataIfNotExpired().then((cachedData) async{
