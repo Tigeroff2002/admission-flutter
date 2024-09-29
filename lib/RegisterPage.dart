@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:admission_flutter/AuthorizationPage.dart';
-import 'package:admission_flutter/ProfilePageWidget.dart';
+import 'package:admission_flutter/LKWidget.dart';
 import 'package:admission_flutter/models/requests/UserRegisterModelRequest.dart';
 import 'package:admission_flutter/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -95,21 +95,19 @@ class RegisterPageState extends State<RegisterPage> {
 
             MySharedPreferences mySharedPreferences = new MySharedPreferences();
 
-            await mySharedPreferences.clearData();
+           mySharedPreferences.clearData();
 
-            await mySharedPreferences.saveDataWithExpiration(response.body, const Duration(days: 7));
-
-            Navigator.push(
+          mySharedPreferences.saveDataWithExpiration(response.body, const Duration(days: 7)).then((_){
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => LK()));
-
-            firstNameController.clear();
-            secondNameController.clear();
-            emailController.clear();
-            passwordController.clear();
-          }
-      });
+                MaterialPageRoute(builder: (context) => LK()));
+                
+              firstNameController.clear();
+              secondNameController.clear();
+              emailController.clear();
+              passwordController.clear();
+          });}
+        });
     }
     catch (e) {
       if (e is SocketException) {

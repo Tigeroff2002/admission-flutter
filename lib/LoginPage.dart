@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:admission_flutter/AuthorizationPage.dart';
 import 'package:admission_flutter/GlobalEndpoints.dart';
-import 'package:admission_flutter/ProfilePageWidget.dart';
+import 'package:admission_flutter/LKWidget.dart';
 import 'package:admission_flutter/models/requests/UserLoginModelRequest.dart';
 import 'package:admission_flutter/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,8 +44,6 @@ class LoginPageState extends State<LoginPage> {
 
     var uris = GlobalEndpoints();
 
-    bool isMobile = Theme.of(context).platform == TargetPlatform.android;
-
     var currentUri = uris.webUri;
 
     var requestString = '/login';
@@ -63,22 +61,18 @@ class LoginPageState extends State<LoginPage> {
 
       if (response.statusCode == 200) {
 
-        var jsonData = jsonDecode(response.body);
-
         MySharedPreferences mySharedPreferences = new MySharedPreferences();
 
-        await mySharedPreferences.clearData();
+        mySharedPreferences.clearData();
 
-        print(response.body);
+        mySharedPreferences.saveDataWithExpiration(response.body, const Duration(days: 7)).then((_){
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LK()));
 
-        await mySharedPreferences.saveDataWithExpiration(response.body, const Duration(days: 7));
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LK()),
-        );
-        emailController.clear();
-        passwordController.clear();
+            emailController.clear();
+            passwordController.clear();
+        });
 
       } else if (response.statusCode == 400){
         showDialog<void>(

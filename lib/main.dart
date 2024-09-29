@@ -1,16 +1,13 @@
 import 'package:admission_flutter/AuthorizationPage.dart';
 import 'package:admission_flutter/HomePage.dart';
 import 'package:admission_flutter/LoginPage.dart';
-import 'package:admission_flutter/ProfilePageWidget.dart';
+import 'package:admission_flutter/LKWidget.dart';
 import 'package:admission_flutter/RegisterPage.dart';
 import 'package:admission_flutter/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-
   WidgetsFlutterBinding.ensureInitialized();
-
-  MySharedPreferences sharedPreferences = new MySharedPreferences();
 
   runApp(MyApp());
 }
