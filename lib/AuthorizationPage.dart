@@ -1,9 +1,37 @@
 import 'package:admission_flutter/HomePage.dart';
 import 'package:admission_flutter/LoginPage.dart';
 import 'package:admission_flutter/RegisterPage.dart';
+import 'package:admission_flutter/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
-class AuthorizationPage extends StatelessWidget {
+class AuthorizationPage extends StatefulWidget {
+
+  @override
+  AuthorizationPageState createState() {
+    return new AuthorizationPageState();
+  }
+}
+
+class AuthorizationPageState extends State<AuthorizationPage> {
+
+  MySharedPreferences mySharedPreferences = new MySharedPreferences();
+
+  String? cachedData = null;
+
+  @override
+  void initState(){
+
+    mySharedPreferences.getDataIfNotExpired().then((value) => cachedData = value);
+
+    if (cachedData != null) {
+      Future(() {
+        Navigator.of(context).pushNamed('/lk');
+      });
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

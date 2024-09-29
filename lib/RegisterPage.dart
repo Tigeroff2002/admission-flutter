@@ -59,7 +59,7 @@ class RegisterPageState extends State<RegisterPage> {
 
     var currentUri = uris.webUri;
 
-    var requestString = '/users/register';
+    var requestString = '/register';
 
     var currentPort = uris.currentWebPort;
 

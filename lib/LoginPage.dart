@@ -48,7 +48,7 @@ class LoginPageState extends State<LoginPage> {
 
     var currentUri = uris.webUri;
 
-    var requestString = '/users/login';
+    var requestString = '/login';
 
     var currentPort = uris.currentWebPort;
 
