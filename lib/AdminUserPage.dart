@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:admission_flutter/LKWidget.dart';
 import 'package:admission_flutter/models/requests/UserLKModelRequest.dart';
 import 'package:admission_flutter/models/responses/AdminCheckResponse.dart';
 import 'package:admission_flutter/shared_preferences.dart';
@@ -106,6 +107,12 @@ class AdminLKState extends State<AdminLK> {
     });
   }
 
+    void handleBackToLKClick() {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LK()));
+  }
+
   void handleSubmit() async {
 
     mySharedPreferences.getDataIfNotExpired().then((cachedData) async{
@@ -140,7 +147,7 @@ class AdminLKState extends State<AdminLK> {
         body: jsonEncode(requestData),
       );
       if (response.statusCode == 200) {
-        fetchAbiturients(); // Refresh the abiturients list
+        fetchAbiturients();
       } else {
         print('Failed to add information');
       }
@@ -241,6 +248,11 @@ class AdminLKState extends State<AdminLK> {
                                   )
                                 : Text("Пока нет данных для отображения.")
                             : Container(),
+                              SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: handleBackToLKClick,
+                                child: Text('Вернуться в ЛК'),
+                              ),
                       ],
                     ),
                   ),

@@ -114,7 +114,6 @@ class LoginPageState extends State<LoginPage> {
     }
     catch (e) {
       if (e is SocketException) {
-        //treat SocketException
         showDialog<void>(
           context: context,
           builder: (context) => AlertDialog(
@@ -132,7 +131,6 @@ class LoginPageState extends State<LoginPage> {
         );
       }
       else if (e is TimeoutException) {
-        //treat TimeoutException
         print("Timeout exception: ${e.toString()}");
       }
       else

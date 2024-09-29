@@ -129,7 +129,6 @@ class RegisterPageState extends State<RegisterPage> {
         );
       }
       else if (e is TimeoutException) {
-        //treat TimeoutException
         print("Timeout exception: ${e.toString()}");
       }
       else
@@ -254,11 +253,11 @@ class RegisterPageState extends State<RegisterPage> {
 
     Widget checkbox(
       {required String title, bool initValue = false, required Function(bool boolValue) onChanged}) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(title),
-          Checkbox(value: initValue, onChanged: (b) => onChanged(b!))
-        ]);
-      }
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(title),
+              Checkbox(value: initValue, onChanged: (b) => onChanged(b!))
+            ]);
+          }
 }

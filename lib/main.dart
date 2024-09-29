@@ -1,10 +1,9 @@
 import 'package:admission_flutter/AdminUserPage.dart';
 import 'package:admission_flutter/AuthorizationPage.dart';
-import 'package:admission_flutter/HomePage.dart';
+import 'package:admission_flutter/DirectionsPage.dart';
 import 'package:admission_flutter/LoginPage.dart';
 import 'package:admission_flutter/LKWidget.dart';
 import 'package:admission_flutter/RegisterPage.dart';
-import 'package:admission_flutter/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,8 +28,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterPage(),
         '/lk': (context) => LK(),
         '/adminLK': (context) => AdminLK(),
-/*         '/directions': (context) => DirectionsPage(),
-        'direction/:id' (context) => SingleDirectionPage() */
+        '/directions': (context) => DirectionsPage()
       },
     );
   }

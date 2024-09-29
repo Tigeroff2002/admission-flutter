@@ -4,7 +4,6 @@ class MySharedPreferences {
   static const String _keyData = 'myData';
   static const String _keyExpiration = 'expirationTime';
 
-  // Function to save data with an expiration date to SharedPreferences
   Future<bool> saveDataWithExpiration(
       String data, Duration expirationDuration) async {
     try {
@@ -20,7 +19,6 @@ class MySharedPreferences {
     }
   }
 
-  // Function to get data from SharedPreferences if it's not expired
   Future<String?> getDataIfNotExpired() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,16 +26,14 @@ class MySharedPreferences {
       String? expirationTimeStr = prefs.getString(_keyExpiration);
       if (data == null || expirationTimeStr == null) {
         print('No data or expiration time found in SharedPreferences.');
-        return null; // No data or expiration time found.
+        return null;
       }
 
       DateTime expirationTime = DateTime.parse(expirationTimeStr);
       if (expirationTime.isAfter(DateTime.now())) {
         print('Data has not expired.');
-        // The data has not expired.
         return data;
       } else {
-        // Data has expired. Remove it from SharedPreferences.
         await prefs.remove(_keyData);
         await prefs.remove(_keyExpiration);
         print('Data has expired. Removed from SharedPreferences.');
@@ -49,7 +45,6 @@ class MySharedPreferences {
     }
   }
 
-  // Function to clear data from SharedPreferences
   Future<void> clearData() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:admission_flutter/AuthorizationPage.dart';
+import 'package:admission_flutter/DirectionsPage.dart';
 import 'package:admission_flutter/GlobalEndpoints.dart';
 import 'package:admission_flutter/models/requests/UserLKModelRequest.dart';
 import 'package:admission_flutter/models/requests/UserLogoutModelRequest.dart';
@@ -152,25 +153,47 @@ class LKState extends State<LK> {
     }});
   }
 
+  void redirectToDirectionsPage() {
+     Navigator.pushNamed(context, '/directions');
+  }
+
 @override
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       title: Text(isAdmin ? 'Панель администратора' : 'Личный кабинет пользователя'),
       centerTitle: true,
-      leading: IconButton(
-        icon: Text('Выйти', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+      automaticallyImplyLeading: false,
+      titleSpacing: 0,
+      flexibleSpace: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Column(children: [
+              SizedBox(height: 10.0),
+              ElevatedButton(
+              onPressed: () {
+                logout(context);
+                },
+              child: Text(
+                'Выйти',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple,
+                ),
+              ),),],)
+          ),
+        ],
       ),
     ),
-    body: Center( // Add Center widget here
+    body: Center(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-          crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
               radius: 50,
@@ -182,12 +205,17 @@ Widget build(BuildContext context) {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                redirectToDirectionsPage();
+                },
+                child: Text('К списку направлений'),),
+           SizedBox(height: 20),
             isAdmin
                 ? Column(
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // Navigate to Admin Page
                           Navigator.pushNamed(context, '/adminLK');
                         },
                         child: Text('Перейти на страницу админа'),
@@ -324,7 +352,6 @@ Widget build(BuildContext context) {
       }
       catch (e) {
         if (e is SocketException) {
-          //treat SocketException
           showDialog<void>(
             context: context,
             builder: (context) => AlertDialog(
@@ -342,7 +369,6 @@ Widget build(BuildContext context) {
           );
         }
         else if (e is TimeoutException) {
-          //treat TimeoutException
           print("Timeout exception: ${e.toString()}");
         }
         else
