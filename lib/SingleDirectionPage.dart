@@ -21,16 +21,37 @@ class SingleDirectionPage extends StatefulWidget {
 
 class SingleDirectionPageState extends State<SingleDirectionPage> {
 
-  int direction_id = 0;
-  String directionCaption = '';
-  int directionPlacesNumber = 0;
-  int directionMinBall = 0;
-  List<dynamic> places = [];
-  bool isLoading = true;
+  int direction_id = 1;
+  String directionCaption = 'PRI';
+  int directionPlacesNumber = 10;
+  int directionMinBall = 50;
+  List<dynamic> places = 
+  [
+    {
+        "place": 1,
+        "abiturient_id": 1,
+        "abiturient_name": "Kirill Parakhin",
+        "mark": 84,
+        "admission_status": "request_in_progress",
+        "prioritet_number": 1,
+        "has_original_diplom": true
+    },
+    {
+        "place": 2,
+        "abiturient_id": 2,
+        "abiturient_name": "Semen Bogdan",
+        "mark": 82,
+        "admission_status": "request_in_progress",
+        "prioritet_number": 1,
+        "has_original_diplom": false
+    }    
+  ];
+/*   bool isLoading = true; */
+  bool isLoading = false;
   String? error;
   bool showModal = false;
   bool isAdmin = false;
-  int abiturient_id = 0;
+  int abiturient_id = 1;
 
   SingleDirectionPageState({required this.direction_id});
 
@@ -39,7 +60,7 @@ class SingleDirectionPageState extends State<SingleDirectionPage> {
   @override
   void initState() {
 
-     mySharedPreferences.getDataIfNotExpired().then((value) {
+/*      mySharedPreferences.getDataIfNotExpired().then((value) {
       if (value == null) {
         Future(() {
           Navigator.of(context).pushNamed('/');
@@ -51,7 +72,7 @@ class SingleDirectionPageState extends State<SingleDirectionPage> {
         isAdmin = cacheContent.is_admin; 
         abiturient_id = cacheContent.abiturient_id;    
       }    
-    });
+    }); */
 
     super.initState();
 
@@ -70,7 +91,7 @@ class SingleDirectionPageState extends State<SingleDirectionPage> {
     var model = new GetDirectionInfoRequest(abiturient_id: abiturient_id, token: token, direction_id: direction_id);
     var requestMap = model.toJson();
 
-    try {
+/*     try {
       final response = await http.post(
         Uri.parse('http://localhost:8000/direction'),
         body: jsonEncode(requestMap),
@@ -99,7 +120,7 @@ class SingleDirectionPageState extends State<SingleDirectionPage> {
         error = 'Error with API request';
         isLoading = false;
       });
-    }
+    } */
     });
   }
 

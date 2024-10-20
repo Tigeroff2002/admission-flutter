@@ -56,7 +56,11 @@ class LoginPageState extends State<LoginPage> {
 
     final body = jsonEncode(requestMap);
 
-    try {
+    Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LK()));
+
+/*     try {
       final response = await http.post(url, headers: headers, body: body);
 
       if (response.statusCode == 200) {
@@ -135,7 +139,7 @@ class LoginPageState extends State<LoginPage> {
       }
       else
         print("Unhandled exception: ${e.toString()}");
-    }
+    } */
   }
 
   @override

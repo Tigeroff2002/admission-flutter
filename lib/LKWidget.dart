@@ -19,8 +19,26 @@ class LK extends StatefulWidget {
 
 class LKState extends State<LK> {
 
-  String name = '';
-  List<dynamic> directionsLinks = [];
+  String name = 'Kirill Parakhin';
+  List<dynamic> directionsLinks = 
+  [
+      {
+        "direction_id": 1,
+        "direction_caption": "PRI",
+        "place": 1,
+        "mark": 84,
+        "admission_status": "request_in_progress",
+        "priotitet_number": 1
+    },
+    {
+        "direction_id": 2,
+        "direction_caption": "IST",
+        "place": 2,
+        "mark": 78,
+        "admission_status": "request_in_progress",
+        "priotitet_number": 2
+    }
+  ];
   String profilePictureUrl = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg";
   bool isAdmin = false;
   bool showDirectionForm = false;
@@ -35,7 +53,7 @@ class LKState extends State<LK> {
   void initState() {
     super.initState();
 
-    mySharedPreferences.getDataIfNotExpired().then((value) {
+/*     mySharedPreferences.getDataIfNotExpired().then((value) {
       if (value == null) {
         Future(() {
           Navigator.of(context).pushNamed('/');
@@ -46,9 +64,9 @@ class LKState extends State<LK> {
         var cacheContent = AdminCheckResponse.fromJson(json);
         isAdmin = cacheContent.is_admin;     
       }    
-    });
+    }); */
 
-    getUserData();
+    //getUserData();
   }
 
   Future<void> getUserData() async {
@@ -63,7 +81,7 @@ class LKState extends State<LK> {
     var model = new UserLKModelRequest(abiturient_id: abiturient_id, token: token);
     var requestMap = model.toJson();
 
-    try {
+/*     try {
       final response = await http.post(
         Uri.parse('http://localhost:8000/lk'),
         body: jsonEncode(requestMap),
@@ -85,7 +103,7 @@ class LKState extends State<LK> {
       }
     } catch (error) {
       print("Error fetching user data: $error");
-    }      
+    }   */    
     });
   }
 
@@ -174,7 +192,8 @@ Widget build(BuildContext context) {
               SizedBox(height: 10.0),
               ElevatedButton(
               onPressed: () {
-                logout(context);
+/*                 logout(context); */
+
                 },
               child: Text(
                 'Выйти',

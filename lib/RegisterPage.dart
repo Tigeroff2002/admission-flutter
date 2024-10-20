@@ -68,7 +68,11 @@ class RegisterPageState extends State<RegisterPage> {
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode(requestMap);
 
-    try {
+    Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LK()));
+
+/*     try {
       http.post(url ,headers: headers, body : body).then((response) async {
 
         if (response.statusCode == 200)
@@ -133,7 +137,7 @@ class RegisterPageState extends State<RegisterPage> {
       }
       else
         print("Unhandled exception: ${e.toString()}");
-    }
+    } */
   }
 
   @override

@@ -15,8 +15,19 @@ class DirectionsPage extends StatefulWidget {
 
 class DirectionsPageState extends State<DirectionsPage> {
 
-  List<dynamic> directions = [];
-  bool isLoading = true;
+  List<dynamic> directions = 
+  [
+      {
+          "direction_id": 1,
+          "direction_caption": "PRI"
+      },
+      {
+          "direction_id": 2,
+          "direction_caption": "IST"
+      }
+  ];
+/*   bool isLoading = true; */
+  bool isLoading = false;
   String? error;
 
   MySharedPreferences mySharedPreferences = new MySharedPreferences();
@@ -24,13 +35,13 @@ class DirectionsPageState extends State<DirectionsPage> {
   @override
   void initState() {
 
-    mySharedPreferences.getDataIfNotExpired().then((value) {
+/*     mySharedPreferences.getDataIfNotExpired().then((value) {
       if (value == null) {
         Future(() {
           Navigator.of(context).pushNamed('/');
         });
       }     
-    });
+    }); */
 
     super.initState();
 
@@ -49,7 +60,7 @@ class DirectionsPageState extends State<DirectionsPage> {
     var model = new GetAllDirectionsRequest(abiturient_id: abiturient_id, token: token);
     var requestMap = model.toJson();
 
-    try {
+/*     try {
       final response = await http.post(
         Uri.parse('http://localhost:8000/directions'),
         body: jsonEncode(requestMap),
@@ -76,7 +87,7 @@ class DirectionsPageState extends State<DirectionsPage> {
         isLoading = false;
       });
       print('Error with API request: $e');
-    }
+    } */
     });
   }
 
@@ -127,7 +138,7 @@ class DirectionsPageState extends State<DirectionsPage> {
                                     itemBuilder: (context, index) {
                                       final direction = directions[index];
                                       return GestureDetector(
-                                        onTap: () => handleRowClick(direction['direction_id']),
+                                        onTap: () => handleRowClick(1),
                                         child: Card(
                                           margin: EdgeInsets.symmetric(vertical: 8.0),
                                           child: ListTile(
